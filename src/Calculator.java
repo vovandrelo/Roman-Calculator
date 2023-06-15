@@ -1,5 +1,3 @@
-package com.vov;
-
 public class Calculator {
     public static int generateResult(int num1, int num2, byte operation) {
         return switch (operation) {
