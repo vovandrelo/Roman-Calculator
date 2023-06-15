@@ -1,5 +1,3 @@
-package com.vov;
-
 import java.util.Scanner;
 
 public class Main {
@@ -9,12 +7,20 @@ public class Main {
 
         System.out.println("Введите выражение:");
         String expression = scan.nextLine();
+        Validator.validateExpression(expression);
 
-        converter.parseInputStr(expression);
-        int[] numbers = converter.getNumbers();
-        byte operation = converter.getOperation();
-        int result = Calculator.generateResult(numbers[0], numbers[1], operation);
+        Expression expressionStruct = converter.parseInputStr(expression);
+        Validator.validateNumber(expressionStruct.getNumbers()[0]);
+        Validator.validateNumber(expressionStruct.getNumbers()[1]);
+        Validator.validateOperation(expressionStruct.getOperation());
 
-        System.out.println("Результат: " + converter.parseResult(result));
+        int result = Calculator.generateResult(
+                expressionStruct.getNumbers()[0],
+                expressionStruct.getNumbers()[1],
+                expressionStruct.getOperation()
+        );
+        Validator.validateResult(result, expressionStruct.checkIsRomanResult());
+
+        System.out.println("Результат: " + converter.parseResult(result, expressionStruct.checkIsRomanResult()));
     }
 }
